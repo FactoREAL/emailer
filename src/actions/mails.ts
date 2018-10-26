@@ -7,6 +7,7 @@ export function setMails(mails: IMail[]) {
     payload:  mails,
   };
 }
+export type setMails = ReturnType<typeof setMails>;
 
 export function addMail(mail: IMail) {
   return {
@@ -14,6 +15,7 @@ export function addMail(mail: IMail) {
     payload: mail,
   };
 }
+export type addMail = ReturnType<typeof addMail>;
 
 export function delMail(id: number) {
   return {
@@ -23,6 +25,7 @@ export function delMail(id: number) {
     },
   };
 }
+export type delMail = ReturnType<typeof delMail>;
 
 export function toggleEdit(id: number) {
   return {
@@ -32,6 +35,7 @@ export function toggleEdit(id: number) {
     },
   };
 }
+export type toggleEdit = ReturnType<typeof toggleEdit>;
 
 export function setMail(id: number, mail: IMail) {
   return {
@@ -42,3 +46,6 @@ export function setMail(id: number, mail: IMail) {
     },
   };
 }
+export type setMail = ReturnType<typeof setMail>;
+
+export type MailActions = setMails & addMail & delMail & toggleEdit & setMail;

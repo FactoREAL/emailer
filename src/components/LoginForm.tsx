@@ -10,11 +10,11 @@ function mapDispatchToProps(dispatch: Dispatch) {
     setToken: bindActionCreators(setToken, dispatch),
   };
 }
+type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
 
 type Props = {
-  setToken: (s: string) => void,
   location? : any,
-};
+} & MappedDispatch;
 
 type State = {
   login: string,

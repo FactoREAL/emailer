@@ -7,15 +7,18 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import thunk from 'redux-thunk';
 
 import registerServiceWorker from './registerServiceWorker';
-import { allReducers } from './reducers/index';
+import { rootReducer } from './reducers/index';
 import App from './components/App';
 import { composeWithDevTools } from 'redux-devtools-extension';
 
-const store = createStore(allReducers, composeWithDevTools(applyMiddleware(thunk, logger)));
+const store = createStore(
+  rootReducer,
+  composeWithDevTools(applyMiddleware(thunk, logger)),
+);
 
 ReactDOM.render(
   <Provider store={store}>
-    <App />
+    <App/>
   </Provider>,
   document.getElementById('root') as HTMLElement,
 );

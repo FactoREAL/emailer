@@ -1,5 +1,3 @@
-import { IActionType } from '../const';
-
 export interface IRootState {
   token: string;
   folders: IFolder[];
@@ -18,9 +16,4 @@ export interface IMail {
   body: string;
   folder_id: number;
   edit: boolean;
-}
-
-export interface IAction<T> {
-  payload: T;
-  type: IActionType;
 }

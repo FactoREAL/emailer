@@ -3,19 +3,20 @@ import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
 import { addFolderRequest } from 'src/api/folders';
 
-type Props = {
-  addFolder: (name: string, token: string) => void,
-};
-type State = {
-  token: string,
-  name: string,
-};
-
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     addFolder: bindActionCreators(addFolderRequest, dispatch),
   };
 }
+type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
+
+type Props = {}
+& MappedDispatch;
+
+type State = {
+  token: string,
+  name: string,
+};
 
 class AddFolderForm extends React.Component<Props, State> {
   state = {
@@ -58,9 +59,7 @@ class AddFolderForm extends React.Component<Props, State> {
   addSave = () => {
     if (this.state.name) {
       this.props.addFolder(this.state.name, this.state.token);
-      this.setState({
-        name: '',
-      });
+      this.setState({ name: '' });
     }
   }
 }

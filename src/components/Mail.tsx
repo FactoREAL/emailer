@@ -11,14 +11,17 @@ function mapDispatchToProps(dispatch: Dispatch) {
     toggleEdit: bindActionCreators(toggleEdit, dispatch),
   };
 }
+type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
 
 type Props = {
   mail: IMail,
-  toggleEdit: (id: number) => void,
-  deleteMail: (id: number, token: string) => void,
+} & MappedDispatch;
+
+type State = {
+  token: string,
 };
 
-class Mail extends React.Component<Props> {
+class Mail extends React.Component<Props, State> {
   state = {
     token: localStorage.getItem('token') || '',
   };

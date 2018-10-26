@@ -1,7 +1,13 @@
 import { foldersActionType } from 'src/const';
-import { IAction, IFolder } from 'src/types';
+import { FolderActions } from 'src/actions/folders';
 
-function folder(state: IFolder, action: IAction<any>) {
+export type Folder = {
+  id: number,
+  name: string,
+  edit: boolean,
+};
+
+function folder(state: Folder, action: FolderActions) {
   switch (action.type) {
     case foldersActionType.TOGGLE_EDIT:
       return (action.payload.id === state.id) ? { ...state, edit: !state.edit } : state;
@@ -12,14 +18,14 @@ function folder(state: IFolder, action: IAction<any>) {
   }
 }
 
-export function folders(state: IFolder[] = [], action: IAction<any>) {
+export function folders(state: Folder[] = [], action: FolderActions) {
   switch (action.type) {
     case foldersActionType.ADD_FOLDER:
       return [...state, { ...action.payload }];
     case foldersActionType.SET_FOLDERS:
       return action.payload;
     case foldersActionType.DEL_FOLDER:
-      return state.filter(s => s.id !== action.payload.id!);
+      return state.filter(s => s.id !== action.payload.id);
     case foldersActionType.TOGGLE_EDIT:
       return state.map(s => folder(s, action));
     case foldersActionType.SET_FOLDER:

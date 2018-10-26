@@ -12,15 +12,15 @@ function mapDispatchToProps(dispatch: Dispatch) {
     deleteFolder: bindActionCreators(deleteFolderRequest, dispatch),
   };
 }
+type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
 
 type Props = {
   folder: IFolder,
   activeFolder: number,
-  toggleEdit: (id: number) => void,
-  deleteFolder: (id: number, token: string) => void,
-};
+} & MappedDispatch;
 
 type State = {
+  token: string,
   id: number,
 };
 
@@ -31,7 +31,6 @@ class Folder extends React.Component<Props, State> {
   };
   render() {
     const { folder } = this.props;
-    // console.log('folder.id - this.props.activeFolder', folder.id, this.props.activeFolder);
     const css = (folder.id === +this.props.activeFolder)
       ? 'list-group-item list-group-item-action active'
       : 'list-group-item list-group-item-action';
@@ -55,12 +54,8 @@ class Folder extends React.Component<Props, State> {
       </Link>
     );
   }
-  deleteFolder = () => {
-    this.props.deleteFolder(this.state.id, this.state.token);
-  }
-  handleEdit   = () => {
-    this.props.toggleEdit(this.props.folder.id);
-  }
+  deleteFolder = () => this.props.deleteFolder(this.state.id, this.state.token);
+  handleEdit   = () => this.props.toggleEdit(this.props.folder.id);
 }
 
 export default compose(

@@ -2,20 +2,25 @@ import * as React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { addMailRequest } from 'src/api/mails';
-import { IMail } from 'src/types';
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     addMail: bindActionCreators(addMailRequest, dispatch),
   };
 }
+type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
 
 type Props = {
   activeFolder: number,
-  addMail: (mail: IMail, token: string) => void,
+} & MappedDispatch;
+
+type State = {
+  token: string,
+  title: string,
+  body: string,
 };
 
-class AddMailForm extends React.Component<Props> {
+class AddMailForm extends React.Component<Props, State> {
   state = {
     token: localStorage.getItem('token') || '',
     title: '',

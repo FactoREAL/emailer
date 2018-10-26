@@ -8,10 +8,10 @@ function mapStateToProps(state: IRootState) {
     token: state.token,
   };
 }
+type MappedState = ReturnType<typeof mapStateToProps>;
 
-type Props = {
-  token: string,
-};
+type Props = {}
+& MappedState;
 
 class Header extends React.Component<Props> {
   render() {

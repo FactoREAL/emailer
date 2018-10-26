@@ -7,12 +7,15 @@ export function setFolders(folders: IFolder[]) {
     payload: folders,
   };
 }
+export type setFolders = ReturnType<typeof setFolders>;
+
 export function addFolder(folder: IFolder) {
   return {
     type: foldersActionType.ADD_FOLDER,
     payload: folder,
   };
 }
+export type addFolder = ReturnType<typeof addFolder>;
 
 export function deleteFolder(id: number) {
   return {
@@ -22,6 +25,7 @@ export function deleteFolder(id: number) {
     },
   };
 }
+export type deleteFolder = ReturnType<typeof deleteFolder>;
 
 export function toggleEdit(id: number) {
   return {
@@ -31,6 +35,7 @@ export function toggleEdit(id: number) {
     },
   };
 }
+export type toggleEdit = ReturnType<typeof toggleEdit>;
 
 export function setFolder(id: number, folder: IFolder) {
   return {
@@ -41,3 +46,13 @@ export function setFolder(id: number, folder: IFolder) {
     },
   };
 }
+export type setFolder = ReturnType<typeof setFolder>;
+
+// export const folderActions = {
+//   setFolders,
+//   addFolder,
+//   deleteFolder,
+//   toggleEdit,
+//   setFolder,
+// };
+export type FolderActions = setFolders & addFolder & deleteFolder & toggleEdit & setFolder;

@@ -17,5 +17,3 @@ export enum mailsActionType {
   SET_MAIL = 'SET_MAIL',
   TOGGLE_EDIT = 'TOGGLE_MAIL_EDIT',
 }
-
-export type IActionType = tokenActionType | foldersActionType | mailsActionType;

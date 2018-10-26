@@ -2,7 +2,7 @@ import * as React from 'react';
 import { Pop } from 'react-preloading-component';
 
 const WithLoading = (Component:any) => {
-  return function WithLoadingComponent({ ...props }) {
+  return function WithLoading({ ...props }) {
     const { isLoading } = props;
     if (!isLoading) return (<Component {...props} />);
     return (<Component {...props} >

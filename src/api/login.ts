@@ -27,7 +27,8 @@ export function confirmRequest(code: string) {
       },
     };
     const url = `https://dev.emailer-electron-laravel.cronix.life/api/v1/register/confirm/${code}`;
-    axios.post(url, option)
+    axios
+      .post(url, option)
       .then((res:any) => {
         console.log('успешное подтверждение', res);
       })

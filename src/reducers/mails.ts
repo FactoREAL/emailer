@@ -1,7 +1,15 @@
-import { IAction, IMail } from 'src/types';
 import { mailsActionType } from 'src/const';
+import { MailActions } from 'src/actions/mails';
 
-function mail(state: IMail, action: IAction<any>) {
+export type Mail = {
+  id: number,
+  title: string,
+  body: string,
+  folder_id: number,
+  edit: boolean,
+};
+
+function mail(state: Mail, action: MailActions) {
   switch (action.type) {
     case mailsActionType.TOGGLE_EDIT:
       return (state.id === action.payload.id) ? { ...state, edit: !state.edit } : state;
@@ -12,7 +20,7 @@ function mail(state: IMail, action: IAction<any>) {
   }
 }
 
-export function mails(state: IMail[] = [], action: IAction<any>) {
+export function mails(state: Mail[] = [], action: MailActions) {
   switch (action.type) {
     case mailsActionType.SET_MAILS:
       return action.payload;

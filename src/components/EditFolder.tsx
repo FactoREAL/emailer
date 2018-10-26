@@ -11,12 +11,11 @@ function mapDispatchToProps(dispatch: Dispatch) {
     toggleEdit: bindActionCreators(toggleEdit, dispatch),
   };
 }
+type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
 
 type Props = {
   folder: IFolder,
-  editFolder: (id: number, name: string, token: string) => void,
-  toggleEdit: (id: number) => void,
-};
+} & MappedDispatch;
 
 type State = {
   token: string,

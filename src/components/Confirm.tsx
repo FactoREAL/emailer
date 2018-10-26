@@ -8,10 +8,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
     confirmRequest: bindActionCreators(confirmRequest, dispatch),
   };
 }
+type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
 
-type Props = {
-  confirmRequest: (code: string) => void,
-};
+type Props = {} & MappedDispatch;
 
 type State = {
   code: string,

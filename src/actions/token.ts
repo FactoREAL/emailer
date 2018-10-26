@@ -6,3 +6,6 @@ export function setToken(token: string) {
     payload: token,
   };
 }
+export type setToken = ReturnType<typeof setToken>;
+
+export type TokenActions = setToken;

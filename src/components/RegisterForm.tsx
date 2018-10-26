@@ -9,10 +9,9 @@ function mapDispatchToProps(dispatch: Dispatch) {
     registration: bindActionCreators(registration, dispatch),
   };
 }
+type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
 
-type Params = {
-  registration: (data: object) => void,
-};
+type Params = {} & MappedDispatch;
 
 type State = {
   login: string,
