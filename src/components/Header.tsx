@@ -1,7 +1,7 @@
 import * as React from 'react';
 import { Link, NavLink } from 'react-router-dom';
-import { IRootState } from 'src/types';
 import { connect } from 'react-redux';
+import { IRootState } from 'src/reducers/rootReducer';
 
 function mapStateToProps(state: IRootState) {
   return {

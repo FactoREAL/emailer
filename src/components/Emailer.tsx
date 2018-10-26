@@ -5,10 +5,9 @@ import MailList from 'src/components/MailList';
 import { loadFolders } from 'src/api/folders';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { IRootState } from 'src/types';
 import WithLoading from 'src/components/WithLoading';
 import { loadMails } from 'src/api/mails';
-// import WithLoading from 'src/components/WithLoading';
+import { IRootState } from 'src/reducers/rootReducer';
 
 function mapStateToProps(state: IRootState) {
   return {

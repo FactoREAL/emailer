@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { IFolder } from 'src/types';
 import AddFolderForm from 'src/components/AddFolderForm';
 import Folder from 'src/components/Folder';
 import EditFolder from 'src/components/EditFolder';
+import { IFolder } from 'src/reducers/folders';
 
 type Props = {
   folders: IFolder[],

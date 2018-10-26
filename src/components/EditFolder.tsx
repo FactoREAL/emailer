@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { IFolder } from 'src/types';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import { editFolderRequest } from 'src/api/folders';
 import { toggleEdit } from 'src/actions/folders';
+import { IFolder } from 'src/reducers/folders';
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
@@ -60,15 +60,9 @@ class EditFolder extends React.Component<Props, State> {
     if (e.key === 'Enter') {
       this.props.editFolder(this.props.folder.id, this.state.name, this.state.token);
     }
-    // if (e.keyCode === 27) {
-    //   this.cancelEdit();
-    // }
   }
-  saveEdit = () => {
-    this.props.editFolder(this.props.folder.id, this.state.name, this.state.token);
-  }
-  cancelEdit = () => {
-    this.props.toggleEdit(this.props.folder.id);
-  }
+  saveEdit = () => this.props.editFolder(this.props.folder.id, this.state.name, this.state.token);
+  cancelEdit = () => this.props.toggleEdit(this.props.folder.id);
 }
+
 export default connect(null, mapDispatchToProps)(EditFolder);

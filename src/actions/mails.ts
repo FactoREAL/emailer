@@ -1,51 +1,31 @@
-import { IMail } from 'src/types';
-import { mailsActionType } from 'src/const';
+import { IMail } from 'src/reducers/mails';
 
-export function setMails(mails: IMail[]) {
-  return {
-    type: mailsActionType.SET_MAILS,
-    payload:  mails,
-  };
+export enum mailsActionType {
+  SET_MAILS = 'SET_MAILS',
+  ADD_MAIL = 'ADD_MAIL',
+  DEL_MAIL = 'DEL_MAIL',
+  SET_MAIL = 'SET_MAIL',
+  TOGGLE_EDIT = 'TOGGLE_MAIL_EDIT',
 }
-export type setMails = ReturnType<typeof setMails>;
 
-export function addMail(mail: IMail) {
-  return {
-    type: mailsActionType.ADD_MAIL,
-    payload: mail,
-  };
-}
-export type addMail = ReturnType<typeof addMail>;
+export const setMails = (mails: IMail[]) =>
+  ({ type: mailsActionType.SET_MAILS, payload:  mails });
+type SetMails = ReturnType<typeof setMails>;
 
-export function delMail(id: number) {
-  return {
-    type: mailsActionType.DEL_MAIL,
-    payload: {
-      id,
-    },
-  };
-}
-export type delMail = ReturnType<typeof delMail>;
+export const addMail = (mail: IMail) =>
+  ({ type: mailsActionType.ADD_MAIL, payload: mail });
+type AddMail = ReturnType<typeof addMail>;
 
-export function toggleEdit(id: number) {
-  return {
-    type: mailsActionType.TOGGLE_EDIT,
-    payload: {
-      id,
-    },
-  };
-}
-export type toggleEdit = ReturnType<typeof toggleEdit>;
+export const delMail = (id: number) =>
+  ({ type: mailsActionType.DEL_MAIL, payload: { id } });
+type DelMail = ReturnType<typeof delMail>;
 
-export function setMail(id: number, mail: IMail) {
-  return {
-    type: mailsActionType.SET_MAIL,
-    payload: {
-      id,
-      mail,
-    },
-  };
-}
-export type setMail = ReturnType<typeof setMail>;
+export const toggleEdit = (id: number) =>
+  ({ type: mailsActionType.TOGGLE_EDIT, payload: { id } });
+type ToggleEdit = ReturnType<typeof toggleEdit>;
 
-export type MailActions = setMails & addMail & delMail & toggleEdit & setMail;
+export const setMail = (id: number, mail: IMail) =>
+  ({ type: mailsActionType.SET_MAIL, payload: { id, mail } });
+type SetMail = ReturnType<typeof setMail>;
+
+export type MailsActions = SetMails & AddMail & DelMail & ToggleEdit & SetMail;

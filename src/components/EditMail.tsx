@@ -1,9 +1,9 @@
 import * as React from 'react';
-import { IMail } from 'src/types';
 import { bindActionCreators, Dispatch } from 'redux';
 import { editMailRequest } from 'src/api/mails';
 import { connect } from 'react-redux';
 import { toggleEdit } from 'src/actions/mails';
+import { IMail } from 'src/reducers/mails';
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {

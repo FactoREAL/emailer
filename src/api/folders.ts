@@ -1,7 +1,8 @@
-import axios from 'axios';
-import { addFolder, deleteFolder, setFolder, setFolders } from 'src/actions/folders';
 import { Dispatch } from 'redux';
-import { IFolder } from 'src/types';
+import axios from 'axios';
+
+import * as fromActions from 'src/actions/folders';
+import { IFolder } from 'src/reducers/folders';
 
 export function loadFolders(token: string, callback: any) {
   return (dispatch: Dispatch) => {
@@ -18,18 +19,12 @@ export function loadFolders(token: string, callback: any) {
         res.data.folders.map((f: any) => {
           folders.push({ id: f.id, name: f.name, edit: false });
         });
-        dispatch(setFolders(folders));
+        dispatch(fromActions.setFolders(folders));
         callback();
       })
       .catch(err => {
         console.error(err);
       });
-    // const folders = [
-    //   { id: 1, name: 'folder 1', edit: false },
-    //   { id: 2, name: 'folder 2', edit: false },
-    //   { id: 3, name: 'folder 3', edit: false },
-    // ];
-    // dispatch(setFolders(folders));
   };
 }
 
@@ -46,13 +41,12 @@ export function deleteFolderRequest(id: number, token: string) {
       },
     };
     axios.delete('https://dev.emailer-electron-laravel.cronix.life/api/v1/folders', option)
-      .then(res => {
-        dispatch(deleteFolder(id));
+      .then(() => {
+        dispatch(fromActions.deleteFolder(id));
       })
       .catch(err => {
         console.error(err);
       });
-    // dispatch(deleteFolder(id));
   };
 }
 
@@ -74,13 +68,11 @@ export function addFolderRequest(name: string, token: string) {
       .then(res => {
         const { data } = res;
         const folder = { id: data.id, name: data.name, edit: false };
-        dispatch(addFolder(folder));
+        dispatch(fromActions.addFolder(folder));
       })
       .catch(err => {
         console.error(err);
       });
-    // const folder = { name, id: 5, edit: false };
-    // dispatch(addFolder(folder));
   };
 }
 
@@ -97,14 +89,12 @@ export function editFolderRequest(id: number, name: string, token: string) {
       name,
     };
     axios.put(`https://dev.emailer-electron-laravel.cronix.life/api/v1/folders/${id}`, body, option)
-      .then(res => {
+      .then(() => {
         const folder = { id, name, edit: false };
-        dispatch(setFolder(id, folder));
+        dispatch(fromActions.setFolder(id, folder));
       })
       .catch(err => {
         console.error(err);
       });
-    // const folder = { id, name, edit: false };
-    // dispatch(setFolder(id, folder));
   };
 }

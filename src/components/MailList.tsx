@@ -1,8 +1,8 @@
 import * as React from 'react';
-import { IMail } from 'src/types';
 import Mail from 'src/components/Mail';
 import AddMailForm from 'src/components/AddMailForm';
 import EditMail from 'src/components/EditMail';
+import { IMail } from 'src/reducers/mails';
 
 type Props = {
   match: any,

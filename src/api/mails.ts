@@ -1,7 +1,7 @@
 import { Dispatch } from 'redux';
 import { addMail, delMail, setMail, setMails } from 'src/actions/mails';
-import { IMail } from 'src/types';
 import axios from 'axios';
+import { IMail } from 'src/reducers/mails';
 
 export function loadMails(token: string, callback: any) {
   return (dispatch: Dispatch) => {
@@ -36,7 +36,7 @@ export function loadMails(token: string, callback: any) {
     //   { id: 3, title: 'title 22', body: 'body 22', folder_id: 2, edit: false },
     //   { id: 4, title: 'title 3', body: 'body 3', folder_id: 3, edit: false },
     // ];
-    // dispatch(setMails(mails));
+    // dispatch(SetMails(mails));
   };
 }
 
@@ -122,6 +122,6 @@ export function editMailRequest(id: number, mail: IMail, token: string) {
       .catch(err => {
         console.error(err);
       });
-    // dispatch(setMail(id, mail));
+    // dispatch(SetMail(id, mail));
   };
 }

@@ -1,10 +1,10 @@
 import * as React from 'react';
-import { IFolder } from 'src/types';
 import { bindActionCreators, compose, Dispatch } from 'redux';
 import { deleteFolderRequest } from 'src/api/folders';
 import { connect } from 'react-redux';
-import { toggleEdit } from 'src/actions/folders';
 import { Link } from 'react-router-dom';
+import { toggleEdit } from 'src/actions/folders';
+import { IFolder } from 'src/reducers/folders';
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {

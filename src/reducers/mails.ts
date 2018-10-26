@@ -1,7 +1,6 @@
-import { mailsActionType } from 'src/const';
-import { MailActions } from 'src/actions/mails';
+import { MailsActions, mailsActionType } from 'src/actions/mails';
 
-export type Mail = {
+export type IMail = {
   id: number,
   title: string,
   body: string,
@@ -9,7 +8,7 @@ export type Mail = {
   edit: boolean,
 };
 
-function mail(state: Mail, action: MailActions) {
+function mail(state: IMail, action: MailsActions) {
   switch (action.type) {
     case mailsActionType.TOGGLE_EDIT:
       return (state.id === action.payload.id) ? { ...state, edit: !state.edit } : state;
@@ -20,7 +19,7 @@ function mail(state: Mail, action: MailActions) {
   }
 }
 
-export function mails(state: Mail[] = [], action: MailActions) {
+export function mails(state: IMail[] = [], action: MailsActions) {
   switch (action.type) {
     case mailsActionType.SET_MAILS:
       return action.payload;

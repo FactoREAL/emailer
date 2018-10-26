@@ -7,7 +7,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import thunk from 'redux-thunk';
 
 import registerServiceWorker from './registerServiceWorker';
-import { rootReducer } from './reducers/index';
+import { rootReducer } from './reducers/rootReducer';
 import App from './components/App';
 import { composeWithDevTools } from 'redux-devtools-extension';
 

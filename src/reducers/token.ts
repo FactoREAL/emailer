@@ -1,12 +1,9 @@
-import { tokenActionType } from '../const/index';
-import { TokenActions } from 'src/actions/token';
+import { TokenActions, tokenActionType } from 'src/actions/token';
 
-export type Token = string;
-
-export function token(state: Token = '', action: TokenActions) {
+export function token(state: string = '', action: TokenActions) {
   switch (action.type) {
     case tokenActionType.SET_TOKEN:
-      return action.payload;
+      return action.payload.token;
     default:
       return state;
   }
