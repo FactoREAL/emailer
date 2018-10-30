@@ -3,6 +3,7 @@ import AddFolderForm from 'src/components/AddFolderForm';
 import Folder from 'src/components/Folder';
 import EditFolder from 'src/components/EditFolder';
 import { IFolder } from 'src/reducers/folders';
+import { compose } from 'redux';
 
 type Props = {
   folders: IFolder[],
@@ -34,4 +35,5 @@ class FolderList extends React.Component<Props> {
   }
 }
 
-export default FolderList;
+export default compose(
+)(FolderList);

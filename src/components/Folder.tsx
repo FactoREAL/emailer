@@ -1,15 +1,14 @@
 import * as React from 'react';
 import { bindActionCreators, compose, Dispatch } from 'redux';
-import { deleteFolderRequest } from 'src/api/folders';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { toggleEdit } from 'src/actions/folders';
+import { delFolderRequest, toggleEdit } from 'src/actions/folders';
 import { IFolder } from 'src/reducers/folders';
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
     toggleEdit: bindActionCreators(toggleEdit, dispatch),
-    deleteFolder: bindActionCreators(deleteFolderRequest, dispatch),
+    delFolderRequest: bindActionCreators(delFolderRequest, dispatch),
   };
 }
 type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
@@ -20,13 +19,11 @@ type Props = {
 } & MappedDispatch;
 
 type State = {
-  token: string,
   id: number,
 };
 
 class Folder extends React.Component<Props, State> {
   state = {
-    token: localStorage.getItem('token') || '',
     id: this.props.folder.id,
   };
   render() {
@@ -54,7 +51,7 @@ class Folder extends React.Component<Props, State> {
       </Link>
     );
   }
-  deleteFolder = () => this.props.deleteFolder(this.state.id, this.state.token);
+  deleteFolder = () => this.props.delFolderRequest(this.props.folder.id);
   handleEdit   = () => this.props.toggleEdit(this.props.folder.id);
 }
 

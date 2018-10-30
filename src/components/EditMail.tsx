@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
-import { editMailRequest } from 'src/api/mails';
 import { connect } from 'react-redux';
-import { toggleEdit } from 'src/actions/mails';
+import { editMailRequest, toggleEdit } from 'src/actions/mails';
 import { IMail } from 'src/reducers/mails';
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    editMail: bindActionCreators(editMailRequest, dispatch),
+    editMailRequest: bindActionCreators(editMailRequest, dispatch),
     toggleEdit: bindActionCreators(toggleEdit, dispatch),
   };
 }
@@ -18,14 +17,12 @@ type Props = {
 } & MappedDispatch;
 
 type State = {
-  token: string,
   title: string,
   body: string,
 };
 
 class EditMail extends React.Component<Props, State> {
   state = {
-    token: localStorage.getItem('token') || '',
     title: this.props.mail.title,
     body: this.props.mail.body,
   };
@@ -81,7 +78,7 @@ class EditMail extends React.Component<Props, State> {
       folder_id: this.props.mail.folder_id,
       edit: false,
     };
-    this.props.editMail(this.props.mail.id, mail, this.state.token);
+    this.props.editMailRequest(this.props.mail.id, mail);
   }
   handleCancel   = (e: React.FormEvent<HTMLButtonElement>) => {
     this.props.toggleEdit(this.props.mail.id);

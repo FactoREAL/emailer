@@ -6,6 +6,11 @@ export type IFolder = {
   edit: boolean,
 };
 
+export interface FoldersState {
+  loading: boolean;
+  data: IFolder[];
+}
+
 function folder(state: IFolder, action: FolderActions) {
   switch (action.type) {
     case foldersActionType.TOGGLE_EDIT:
@@ -17,18 +22,28 @@ function folder(state: IFolder, action: FolderActions) {
   }
 }
 
-export function folders(state: IFolder[] = [], action: FolderActions) {
+const initFoldersState = {
+  loading: false,
+  data: [],
+};
+
+export function folders(state: FoldersState = initFoldersState, action: FolderActions) {
+  let newFolders;
   switch (action.type) {
+    case foldersActionType.FETCH_FOLDERS:
+    case foldersActionType.GET_FOLDERS_REQUEST:
+      return { ...state, loading: true };
     case foldersActionType.ADD_FOLDER:
-      return [...state, { ...action.payload }];
+      return { ...state, data: [...state.data, { ...action.payload }] };
     case foldersActionType.SET_FOLDERS:
-      return action.payload;
+      return { ...state, data: action.payload, loading: false };
     case foldersActionType.DEL_FOLDER:
-      return state.filter(s => s.id !== action.payload.id);
+      newFolders = state.data.filter(s => s.id !== action.payload.id);
+      return { ...state, data: newFolders };
     case foldersActionType.TOGGLE_EDIT:
-      return state.map(s => folder(s, action));
     case foldersActionType.SET_FOLDER:
-      return state.map(s => folder(s, action));
+      newFolders = state.data.map(s => folder(s, action));
+      return { ...state, data: newFolders };
     default:
       return state;
   }

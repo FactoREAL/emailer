@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { addMailRequest } from 'src/api/mails';
+import { addMailRequest } from 'src/actions/mails';
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    addMail: bindActionCreators(addMailRequest, dispatch),
+    addMailRequest: bindActionCreators(addMailRequest, dispatch),
   };
 }
 type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
@@ -15,14 +15,12 @@ type Props = {
 } & MappedDispatch;
 
 type State = {
-  token: string,
   title: string,
   body: string,
 };
 
 class AddMailForm extends React.Component<Props, State> {
   state = {
-    token: localStorage.getItem('token') || '',
     title: '',
     body: '',
   };
@@ -82,7 +80,7 @@ class AddMailForm extends React.Component<Props, State> {
       edit: false,
     };
     if (this.state.title && this.state.body) {
-      this.props.addMail(mail, this.state.token);
+      this.props.addMailRequest(mail);
       this.setState({
         title: '',
         body: '',

@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
-import { deleteMailRequest } from 'src/api/mails';
 import { connect } from 'react-redux';
-import { toggleEdit } from 'src/actions/mails';
+import { delMailRequest, toggleEdit } from 'src/actions/mails';
 import { IMail } from 'src/reducers/mails';
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    deleteMail: bindActionCreators(deleteMailRequest, dispatch),
+    delMailRequest: bindActionCreators(delMailRequest, dispatch),
     toggleEdit: bindActionCreators(toggleEdit, dispatch),
   };
 }
@@ -17,14 +16,7 @@ type Props = {
   mail: IMail,
 } & MappedDispatch;
 
-type State = {
-  token: string,
-};
-
-class Mail extends React.Component<Props, State> {
-  state = {
-    token: localStorage.getItem('token') || '',
-  };
+class Mail extends React.Component<Props> {
   render() {
     const { mail } = this.props;
     return (
@@ -56,7 +48,7 @@ class Mail extends React.Component<Props, State> {
     this.props.toggleEdit(this.props.mail.id);
   }
   handleDelete = () => {
-    this.props.deleteMail(this.props.mail.id, this.state.token);
+    this.props.delMailRequest(this.props.mail.id);
   }
 }
 

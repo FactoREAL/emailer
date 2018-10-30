@@ -1,11 +1,11 @@
 import * as React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators, Dispatch } from 'redux';
-import { addFolderRequest } from 'src/api/folders';
+import { addFolderRequest } from 'src/actions/folders';
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    addFolder: bindActionCreators(addFolderRequest, dispatch),
+    addFolderRequest: bindActionCreators(addFolderRequest, dispatch),
   };
 }
 type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
@@ -14,13 +14,11 @@ type Props = {}
 & MappedDispatch;
 
 type State = {
-  token: string,
   name: string,
 };
 
 class AddFolderForm extends React.Component<Props, State> {
   state = {
-    token: localStorage.getItem('token') || '',
     name: '',
   };
   render() {
@@ -58,7 +56,7 @@ class AddFolderForm extends React.Component<Props, State> {
   }
   addSave = () => {
     if (this.state.name) {
-      this.props.addFolder(this.state.name, this.state.token);
+      this.props.addFolderRequest(this.state.name);
       this.setState({ name: '' });
     }
   }

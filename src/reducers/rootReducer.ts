@@ -1,12 +1,12 @@
 import { combineReducers } from 'redux';
 import { token } from './token';
-import { IFolder, folders } from './folders';
-import { IMail, mails } from './mails';
+import { folders, FoldersState } from './folders';
+import { mails, MailsState } from './mails';
 
 export interface IRootState {
   token: string;
-  folders: IFolder[];
-  mails: IMail[];
+  folders: FoldersState;
+  mails: MailsState;
 }
 
 export const rootReducer = combineReducers<IRootState>({

@@ -2,12 +2,12 @@ import * as React from 'react';
 import FolderList from 'src/components/FolderList';
 import { Route } from 'react-router';
 import MailList from 'src/components/MailList';
-import { loadFolders } from 'src/api/folders';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
 import WithLoading from 'src/components/WithLoading';
-import { loadMails } from 'src/api/mails';
 import { IRootState } from 'src/reducers/rootReducer';
+import { fetchFolders } from 'src/actions/folders';
+import { fetchMails } from 'src/actions/mails';
 
 function mapStateToProps(state: IRootState) {
   return {
@@ -19,8 +19,8 @@ type MappedState = ReturnType<typeof mapStateToProps>;
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    loadFolders: bindActionCreators(loadFolders, dispatch),
-    loadMails: bindActionCreators(loadMails, dispatch),
+    fetchFolders: bindActionCreators(fetchFolders, dispatch),
+    fetchMails: bindActionCreators(fetchMails, dispatch),
   };
 }
 type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
@@ -30,21 +30,10 @@ type Props = {
 } & MappedState
   & MappedDispatch;
 
-type State = {
-  token: string
-  foldersLoading: boolean,
-  mailsLoading: boolean,
-};
-
-class Emailer extends React.Component<Props, State> {
-  state = {
-    token: localStorage.getItem('token') || '',
-    foldersLoading: (this.props.folders.length) ? false : true,
-    mailsLoading: (this.props.mails.length) ? false : true,
-  };
+class Emailer extends React.Component<Props> {
   componentDidMount() {
-    this.props.loadFolders(this.state.token, this.endFoldersLoading);
-    this.props.loadMails(this.state.token, this.endMailsLoading);
+    this.props.fetchFolders();
+    this.props.fetchMails();
   }
 
   render() {
@@ -54,30 +43,20 @@ class Emailer extends React.Component<Props, State> {
     return (
       <div className="row container-fluid">
         <WithLoadingFolderList
-          isLoading={this.state.foldersLoading}
+          isLoading={this.props.folders.loading}
           activeFolder={folderId}
-          folders={this.props.folders}
+          folders={this.props.folders.data}
         />
         <Route
           path="/folders/:id"
           render={(props:any) => <WithLoadingMailList
-            isLoading={this.state.mailsLoading}
-            mails={this.props.mails}
+            isLoading={this.props.mails.loading}
+            mails={this.props.mails.data}
             {...props}
           />}
         />
       </div>
     );
-  }
-  endFoldersLoading = () => {
-    this.setState({
-      foldersLoading: false,
-    });
-  }
-  endMailsLoading = () => {
-    this.setState({
-      mailsLoading: false,
-    });
   }
 }
 

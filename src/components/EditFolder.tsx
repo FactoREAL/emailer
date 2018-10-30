@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { bindActionCreators, Dispatch } from 'redux';
 import { connect } from 'react-redux';
-import { editFolderRequest } from 'src/api/folders';
-import { toggleEdit } from 'src/actions/folders';
+import { editFolderRequest, toggleEdit } from 'src/actions/folders';
 import { IFolder } from 'src/reducers/folders';
 
 function mapDispatchToProps(dispatch: Dispatch) {
   return {
-    editFolder: bindActionCreators(editFolderRequest, dispatch),
+    editFolderRequest: bindActionCreators(editFolderRequest, dispatch),
     toggleEdit: bindActionCreators(toggleEdit, dispatch),
   };
 }
@@ -18,13 +17,11 @@ type Props = {
 } & MappedDispatch;
 
 type State = {
-  token: string,
   name: string,
 };
 
 class EditFolder extends React.Component<Props, State> {
   state = {
-    token: localStorage.getItem('token') || '',
     name: this.props.folder.name,
   };
   render() {
@@ -58,10 +55,10 @@ class EditFolder extends React.Component<Props, State> {
   }
   handleKeypress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === 'Enter') {
-      this.props.editFolder(this.props.folder.id, this.state.name, this.state.token);
+      this.props.editFolderRequest(this.props.folder.id, this.state.name);
     }
   }
-  saveEdit = () => this.props.editFolder(this.props.folder.id, this.state.name, this.state.token);
+  saveEdit = () => this.props.editFolderRequest(this.props.folder.id, this.state.name);
   cancelEdit = () => this.props.toggleEdit(this.props.folder.id);
 }
 
