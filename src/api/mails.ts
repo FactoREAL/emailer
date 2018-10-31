@@ -1,17 +1,9 @@
-import axios from 'axios';
+import request from 'src/utils/request';
 import { IMail } from 'src/reducers/mails';
 
-const token = localStorage.getItem('token') || '';
-
 export function getMailsRequest() {
-  const option = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  };
-  return axios.get('https://dev.emailer-electron-laravel.cronix.life/api/v1/emails', option)
+  return request
+    .get('/emails')
     .then(res => {
       const mails: IMail[] = [];
       res.data.data.map((m: any) => {
@@ -32,27 +24,13 @@ export function getMailsRequest() {
 
 export function deleteMailRequest(id: number) {
   const option = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    data: {
-      id: [id],
-    },
+    data: { id: [id] },
   };
-  return axios
+  return request
     .delete('https://dev.emailer-electron-laravel.cronix.life/api/v1/emails', option);
 }
 
 export function addMailRequest(mail: IMail) {
-  const option = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  };
   const body   = {
     emails: [
       {
@@ -63,9 +41,8 @@ export function addMailRequest(mail: IMail) {
       },
     ],
   };
-  const url    = 'https://dev.emailer-electron-laravel.cronix.life/api/v1/emails';
-  return axios
-    .post(url, JSON.stringify(body), option)
+  return request
+    .post('/emails', body)
     .then(res => {
       let { data }  = res;
       data          = data[0];
@@ -84,17 +61,10 @@ export function addMailRequest(mail: IMail) {
 }
 
 export function editMailRequest(id: number, mail: IMail) {
-  const option = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  };
   const body   = {
     title: mail.title,
     body: mail.body,
   };
-  return axios
-    .put(`https://dev.emailer-electron-laravel.cronix.life/api/v1/emails/${id}`, body, option);
+  return request
+    .put(`/emails/${id}`, body);
 }

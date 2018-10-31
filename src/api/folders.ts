@@ -1,19 +1,10 @@
-import axios from 'axios';
+import request from 'src/utils/request';
 
 import { IFolder } from 'src/reducers/folders';
 
-const token = localStorage.getItem('token') || '';
-
 export function getFoldersRequest() {
-  const option = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  };
-  return axios
-    .get('https://dev.emailer-electron-laravel.cronix.life/api/v1/folders', option)
+  return request
+    .get('/folders')
     .then(res => {
       const folders: IFolder[] = [];
       res.data.folders.map((f: any) => {
@@ -28,34 +19,20 @@ export function getFoldersRequest() {
 
 export function deleteFolderRequest(id: number) {
   const option = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-    data: {
-      ids: [id],
-    },
+    data: { ids: [id] },
   };
-  return axios
-    .delete('https://dev.emailer-electron-laravel.cronix.life/api/v1/folders', option);
+  return request
+    .delete('/folders', option);
 }
 
 export function addFolderRequest(name: string) {
-  const option = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  };
   const body   = {
     name,
     description: 'NULL',
     parent_id: 'NULL',
   };
-  return axios
-    .post('https://dev.emailer-electron-laravel.cronix.life/api/v1/folders', body, option)
+  return request
+    .post('https://dev.emailer-electron-laravel.cronix.life/api/v1/folders', body)
     .then(res => {
       const { data } = res;
       const folder   = { id: data.id, name: data.name, edit: false };
@@ -67,18 +44,11 @@ export function addFolderRequest(name: string) {
 }
 
 export function editFolderRequest(id: number, name: string) {
-  const option = {
-    headers: {
-      Authorization: `Bearer ${token}`,
-      Accept: 'application/json',
-      'Content-Type': 'application/json',
-    },
-  };
   const body   = {
     name,
   };
-  return axios
-    .put(`https://dev.emailer-electron-laravel.cronix.life/api/v1/folders/${id}`, body, option)
+  return request
+    .put(`https://dev.emailer-electron-laravel.cronix.life/api/v1/folders/${id}`, body)
     .then(() => {
       const folder = { id, name, edit: false };
       return folder;

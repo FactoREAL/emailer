@@ -1,7 +1,9 @@
 import * as React from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { IRootState } from 'src/reducers/rootReducer';
+import { bindActionCreators, Dispatch } from 'redux';
+import { setToken } from 'src/actions/login';
 
 function mapStateToProps(state: IRootState) {
   return {
@@ -10,8 +12,16 @@ function mapStateToProps(state: IRootState) {
 }
 type MappedState = ReturnType<typeof mapStateToProps>;
 
+function mapDispatchToProps(dispatch: Dispatch) {
+  return {
+    setToken: bindActionCreators(setToken, dispatch),
+  };
+}
+type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
+
 type Props = {}
-& MappedState;
+  & MappedState
+  & MappedDispatch;
 
 class Header extends React.Component<Props> {
   render() {
@@ -26,8 +36,8 @@ class Header extends React.Component<Props> {
     return (
       <div className="navbar navbar-expand navbar-dark bg-dark mb-3">
         <div className=" navbar-nav">
-          <NavLink className="nav-item nav-link" to={'/'}>Домой</NavLink>
-          <NavLink className="nav-item nav-link" to={'/folders'}>Папки</NavLink>
+          <Link className="nav-item nav-link" to={'/'}>Домой</Link>
+          <Link className="nav-item nav-link" to={'/folders'}>Папки</Link>
         </div>
         <div className="navbar-nav ml-auto">
           {auth}
@@ -37,11 +47,8 @@ class Header extends React.Component<Props> {
   }
 
   logout = () => {
-    localStorage.setItem('token', '');
-    this.setState({
-      auth: '',
-    });
+    this.props.setToken('');
   }
 }
 
-export default connect(mapStateToProps)(Header);
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

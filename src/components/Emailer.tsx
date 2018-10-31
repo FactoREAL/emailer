@@ -8,9 +8,11 @@ import WithLoading from 'src/components/WithLoading';
 import { IRootState } from 'src/reducers/rootReducer';
 import { fetchFolders } from 'src/actions/folders';
 import { fetchMails } from 'src/actions/mails';
+import { setToken } from 'src/actions/login';
 
 function mapStateToProps(state: IRootState) {
   return {
+    token: state.token,
     folders: state.folders,
     mails: state.mails,
   };
@@ -21,6 +23,7 @@ function mapDispatchToProps(dispatch: Dispatch) {
   return {
     fetchFolders: bindActionCreators(fetchFolders, dispatch),
     fetchMails: bindActionCreators(fetchMails, dispatch),
+    setToken: bindActionCreators(setToken, dispatch),
   };
 }
 type MappedDispatch = ReturnType<typeof mapDispatchToProps>;
@@ -32,6 +35,10 @@ type Props = {
 
 class Emailer extends React.Component<Props> {
   componentDidMount() {
+    if (!this.props.token) { // страница перезагружена или еще что-то произошло (нет токена)
+      const token = localStorage.getItem('token') || '';
+      if (token) this.props.setToken(token);
+    }
     this.props.fetchFolders();
     this.props.fetchMails();
   }
