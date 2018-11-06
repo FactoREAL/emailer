@@ -1,5 +1,5 @@
 import { combineReducers } from 'redux';
-import { login } from './login';
+import { token } from './token';
 import { folders, FoldersState } from './folders';
 import { mails, MailsState } from './mails';
 
@@ -10,7 +10,7 @@ export interface IRootState {
 }
 
 export const rootReducer = combineReducers<IRootState>({
-  mails,
+  token,
   folders,
-  token: login,
+  mails,
 });
